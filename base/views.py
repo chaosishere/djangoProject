@@ -10,7 +10,7 @@ rooms = [
 ]
 
 def home(request):
-    rooms = Room.objects.all()
+    rooms = Room.objects.all() #overwrite the rooms from above to the models and added via admin panel
     return render(request, 'base/home.html', {'rooms': rooms})
 
 def room(request, pk):

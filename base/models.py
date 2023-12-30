@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-# just cahnging authors check
+# just cahnging authors check aging
 class Room(models.Model):
     #host =
     #topic =

@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-
+# just cahnging authors ignore
 class Room(models.Model):
     #host =
     #topic =

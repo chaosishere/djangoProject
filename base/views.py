@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from .models import Room
 #creating room
 
 rooms = [
@@ -10,6 +10,7 @@ rooms = [
 ]
 
 def home(request):
+    rooms = Room.objects.all()
     return render(request, 'base/home.html', {'rooms': rooms})
 
 def room(request, pk):

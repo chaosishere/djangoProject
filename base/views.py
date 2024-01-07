@@ -15,8 +15,8 @@ def home(request):
     return render(request, 'base/home.html', {'rooms': rooms})
 
 def room(request, pk):
-    room = Room.objects.get(id=pk)
 
+    room = Room.objects.get(id=pk)
     return render(request, 'base/room.html',{'room': room})
 
 def createRoom(request):
@@ -28,4 +28,18 @@ def createRoom(request):
             form.save()
             return redirect('home')
 
+    return render(request, 'base/room_form.html',context)
+
+def updateRoom(request, pk):
+    room = Room.objects.get(id=pk)
+    form = RoomForm(instance=room) #fetching the previously saved form from databse with (instance)
+
+    #Saving the updated form values with
+    if request.method == 'POST':
+        form = RoomForm(request.POST, instance=room)
+        if form.is_valid():
+            form.save()
+            return redirect('room',room.id)
+
+    context = {'form':form}
     return render(request, 'base/room_form.html',context)

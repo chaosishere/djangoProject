@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Room
+from .models import Topic
 from .forms import RoomForm
 #creating room
 
@@ -11,8 +12,15 @@ from .forms import RoomForm
 #]
 
 def home(request):
-    rooms = Room.objects.all() #overwrite the rooms from above to the models and added via admin panel
-    return render(request, 'base/home.html', {'rooms': rooms})
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+
+    rooms = Room.objects.filter(topic__name__contains=q)
+    #overwrite the rooms from above to the models and added via admin panel
+    topics = Topic.objects.all()
+
+    context = {'rooms': rooms, 'topics': topics}
+
+    return render(request, 'base/home.html', context)
 
 def room(request, pk):
 

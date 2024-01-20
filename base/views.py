@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import Room
 from .models import Topic
 from .forms import RoomForm
+from django.db.models import Q
 #creating room
 
 #rooms = [
@@ -14,7 +15,11 @@ from .forms import RoomForm
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
 
-    rooms = Room.objects.filter(topic__name__contains=q)
+    rooms = Room.objects.filter(
+        Q(topic__name__contains=q) |
+        Q(name__icontains=q) |
+        Q(description__icontains=q)
+    )
     #overwrite the rooms from above to the models and added via admin panel
     topics = Topic.objects.all()
 
